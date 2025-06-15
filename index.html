@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ripple Studio AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <aside class="sidebar">
+    <h2>Ripple Studio</h2>
+    <nav>
+      <a href="#" onclick="newChat()">📝 New Chat</a>
+      <a href="#" onclick="searchChats()">🔍 Search Chats</a>
+      <a href="#" onclick="loadLibrary()">📚 Library</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="profile-icon"></div>
+    <div class="chat-container" id="chatContainer">
+      <div class="empty-state" id="emptyState">What's on the agenda today?</div>
+    </div>
+
+    <div class="input-box">
+      <input type="text" placeholder="Ask anything..." id="userInput" />
+      <span class="input-icon" onclick="sendMessage()">📤</span>
+      <span class="input-icon" id="micBtn" onclick="startListening()">🎤</span>
+    </div>
+
+    <select class="language-select" id="language">
+      <option value="en-US" selected>🇺🇸 English</option>
+      <option value="hi-IN">🇮🇳 Hindi</option>
+      <option value="es-ES">🇪🇸 Spanish</option>
+      <option value="fr-FR">🇫🇷 French</option>
+      <option value="de-DE">🇩🇪 German</option>
+    </select>
+  </main>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
