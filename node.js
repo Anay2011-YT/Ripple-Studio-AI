@@ -2,27 +2,31 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { Configuration, OpenAIApi } = require("openai");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const openai = new OpenAIApi(new Configuration({
-  apiKey: "AIzaSyCUKlCNM9lo8uMIuilRQA84kT50-u6Iayk"
-}));
+// Initialize Gemini client with your API key
+const genAI = new GoogleGenerativeAI("AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y");
+
+// Choose a Gemini model (latest is gemini-1.5-flash or gemini-1.5-pro)
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 app.post("/api/chat", async (req, res) => {
   try {
     const { messages } = req.body;
-    const completion = await openai.createChatCompletion({
-      model: "gpt-4", // or "gpt-3.5-turbo"
-      messages,
-      temperature: 0.7,
-    });
-    res.json({ reply: completion.data.choices[0].message.content });
+
+    // Convert messages (like OpenAI format) into a single prompt
+    const prompt = messages.map(m => `${m.role}: ${m.content}`).join("\n");
+
+    const result = await model.generateContent(prompt);
+
+    res.json({ reply: result.response.text() });
   } catch (err) {
-    res.status(500).json({ error: "API error" });
+    console.error("API Error:", err);
+    res.status(500).json({ error: "API error", details: err.message });
   }
 });
 
