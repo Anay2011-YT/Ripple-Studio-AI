@@ -1,5 +1,4 @@
-const API_KEY = "AIzaSyDsq_McH4FNcPQ1gaLKKqe8jAdqtebVH0g"; // Replace with your Gemini API Key
-
+const API_KEY = "AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y"; // Your Gemini API Key
 
 const chatContainer = document.getElementById("chatContainer");
 const userInput = document.getElementById("userInput");
@@ -27,20 +26,29 @@ async function sendMessage() {
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=` + API_KEY,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text }] }],
+          contents: [
+            {
+              role: "user",
+              parts: [{ text }],
+            },
+          ],
         }),
       }
     );
 
     const data = await res.json();
-    const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "⚠️ No response from Gemini.";
-    addMessage(botReply, "bot");
 
+    // Fix: correct path for Gemini response
+    const botReply =
+      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "⚠️ No response from Gemini.";
+
+    addMessage(botReply, "bot");
   } catch (err) {
     console.error("Error:", err);
     addMessage("⚠️ Failed to get response.", "bot");
