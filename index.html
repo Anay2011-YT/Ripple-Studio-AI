@@ -9,6 +9,7 @@
 </head>
 <body>
 
+  <!-- Sidebar -->
   <aside class="sidebar">
     <h2>Ripple Studio</h2>
     <nav>
@@ -18,18 +19,24 @@
     </nav>
   </aside>
 
+  <!-- Main Chat Area -->
   <main class="main">
     <div class="profile-icon"></div>
+
     <div class="chat-container" id="chatContainer">
-      <div class="empty-state" id="emptyState">What's on the agenda today?</div>
+      <div class="empty-state" id="emptyState">
+        What's on the agenda today?
+      </div>
     </div>
 
+    <!-- Input Box -->
     <div class="input-box">
       <input type="text" placeholder="Ask anything..." id="userInput" />
       <span class="input-icon" onclick="sendMessage()">📤</span>
       <span class="input-icon" id="micBtn" onclick="startListening()">🎤</span>
     </div>
 
+    <!-- Language Selector -->
     <select class="language-select" id="language">
       <option value="en-US" selected>🇺🇸 English</option>
       <option value="hi-IN">🇮🇳 Hindi</option>
@@ -39,7 +46,8 @@
     </select>
   </main>
 
+  <!-- JS Script -->
   <script src="script.js"></script>
-
 </body>
 </html>
+
