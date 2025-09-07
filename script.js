@@ -106,3 +106,5 @@ window.newChat = newChat;
 window.searchChats = searchChats;
 window.loadLibrary = loadLibrary;
 window.startListening = startListening;
+
+
