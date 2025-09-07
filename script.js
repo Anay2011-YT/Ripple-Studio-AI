@@ -26,7 +26,7 @@ async function sendMessage() {
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -43,7 +43,7 @@ async function sendMessage() {
 
     const data = await res.json();
 
-    // Fix: correct path for Gemini response
+    // Correct Gemini response path
     const botReply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       "⚠️ No response from Gemini.";
