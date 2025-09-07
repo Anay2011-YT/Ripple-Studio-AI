@@ -1,5 +1,3 @@
-const API_KEY = "AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y"; // Your Gemini API Key
-
 const chatContainer = document.getElementById("chatContainer");
 const userInput = document.getElementById("userInput");
 const micBtn = document.getElementById("micBtn");
@@ -25,29 +23,18 @@ async function sendMessage() {
   emptyState.style.display = "none";
 
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text }],
-            },
-          ],
-        }),
-      }
-    );
+    const res = await fetch("http://localhost:3000/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        messages: [{ role: "user", content: text }],
+      }),
+    });
 
     const data = await res.json();
+    console.log("Server response:", data);
 
-    // Correct Gemini response path
-    const botReply =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "⚠️ No response from Gemini.";
-
+    const botReply = data?.reply || "⚠️ No response from Gemini.";
     addMessage(botReply, "bot");
   } catch (err) {
     console.error("Error:", err);
@@ -100,11 +87,9 @@ function startListening() {
   }
 }
 
-// Make functions globally accessible for HTML onclick
+// Make functions globally accessible
 window.sendMessage = sendMessage;
 window.newChat = newChat;
 window.searchChats = searchChats;
 window.loadLibrary = loadLibrary;
 window.startListening = startListening;
-
-
