@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Initialize Gemini client with your API key
-const genAI = new GoogleGenerativeAI("AIzaSyCeGjERSVfavU-aZIWCHEyxB05Ucc4NT-Y");
+const genAI = new GoogleGenerativeAI("YOUR_API_KEY_HERE"); // Replace with your Gemini API Key
 
 // Choose a Gemini model
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -22,10 +22,11 @@ app.post("/api/chat", async (req, res) => {
 
     const result = await model.generateContent(prompt);
 
-    // Safer way to extract text
-    const reply = result?.response?.candidates?.[0]?.content?.parts?.[0]?.text 
-               || result?.response?.text?.() 
-               || "⚠️ No response from Gemini.";
+    // Extract reply safely
+    const reply =
+      result?.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      result?.response?.text?.() ||
+      "⚠️ No response from Gemini.";
 
     res.json({ reply });
   } catch (err) {
@@ -34,8 +35,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-
 app.listen(3000, () => {
   console.log("✅ Server running at http://localhost:3000");
 });
-
